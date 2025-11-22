@@ -1,0 +1,31 @@
+{
+  "name": "@1wave/backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start-graph-node": "docker-compose up",
+    "start-graph-node:clean": "rimraf ./data && docker-compose up",
+    "clean": "rimraf ./src/types ./build subgraph.yaml",
+    "prepare:local": "mustache config/local.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:base:testing": "node utils/bump_version.js base.testing && mustache config/base.testing.json subgraph.yaml.mustache > subgraph.yaml",
+    "codegen": "graph codegen --output-dir src/types/",
+    "build:graph": "npx graph build",
+    "build:base:testing": "yarn clean && yarn prepare:base:testing && yarn codegen && yarn build:graph",
+    "build:local": "yarn clean && yarn prepare:local && yarn codegen && yarn build:graph",
+    "create:local": "graph create --node http://localhost:8020/ 1wave/backend",
+    "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 1wave/backend -l v0.0.0",
+    "create-and-deploy:local": "yarn build:local && yarn create:local && yarn deploy:local",
+    "create-and-deploy:base:testing": "yarn build:base:testing"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.53.0",
+    "@graphprotocol/graph-ts": "0.28.0",
+    "dotenv": "^16.4.5",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}

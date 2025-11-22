@@ -1,0 +1,172 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: '{{StudioProFactory.name}}'
+    network: {{network}}
+    source:
+      address: '{{StudioProFactory.address}}'
+      abi: StudioProFactory
+      startBlock: {{StudioProFactory.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings.ts
+      entities:
+        - VaultPosition
+      abis:
+        - name: StudioProFactory
+          file: ./abis/StudioProFactory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: VaultCreated(indexed address,(address,address,uint256,uint256,bool,uint256,uint256,uint256,address[],address[],address[],address[],address[],address[],address[],address[],address[]),(address,uint256,uint256,uint256,uint256))
+          handler: handleVaultCreated
+          receipt: true
+        - event: ManagerAdaptersAdded(address[])
+          handler: handleManagerAdaptersAdded
+          receipt: true
+        - event: ManagerAdaptersRemoved(address[])
+          handler: handleManagerAdaptersRemoved
+          receipt: true
+        - event: OwnerAdaptersAdded(address[])
+          handler: handleOwnerAdaptersAdded
+          receipt: true
+        - event: OwnerAdaptersRemoved(address[])
+          handler: handleOwnerAdaptersRemoved
+          receipt: true
+        - event: AssetsAdded(address[],address[])
+          handler: handleAssetsAdded
+          receipt: true
+        - event: AssetsRemoved(address[],address[])
+          handler: handleAssetsRemoved
+          receipt: true
+        - event: DebtsAdded(address[],address[])
+          handler: handleDebtsAdded
+          receipt: true
+        - event: DebtsRemoved(address[],address[])
+          handler: handleDebtsRemoved
+          receipt: true
+templates:
+  - name: StudioProVault
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: StudioProVault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings.ts
+      entities:
+        - VaultExecutions
+        - VaultDeposits
+        - VaultWithdraws
+      abis:
+        - name: StudioProVault
+          file: ./abis/StudioProVault.json
+      eventHandlers:
+        - event: Executed(indexed address,bytes,bytes)
+          handler: handleExecution
+          receipt: true
+        - event: Deposit(indexed address,indexed address,address,uint256,uint256)
+          handler: handleDeposit
+          receipt: true
+        - event: Withdraw(address,address,address,address,uint256,uint256)
+          handler: handleWithdraw
+          receipt: true
+        - event: ManagerAdded(indexed address)
+          handler: handleManagerAdded
+          receipt: true
+        - event: ManagerRemoved(indexed address)
+          handler: handleManagerRemoved
+          receipt: true
+        - event: RiskManagerChanged(indexed address)
+          handler: handleRiskManagerChanged
+          receipt: true
+        - event: DepositorWhitelistAdded(address)
+          handler: handleDepositorWhitelistAdded
+          receipt: true
+        - event: DepositorWhitelistRemoved(address)
+          handler: handleDepositorWhitelistRemoved
+          receipt: true
+        - event: SetMinimumDepositAmount(address,uint256)
+          handler: handleSetMinimumDepositAmount
+          receipt: true
+        - event: DepositWhitelistEnabled()
+          handler: handleDepositWhitelistEnabled
+          receipt: true
+        - event: DepositWhitelistDisabled()
+          handler: handleDepositWhitelistDisabled
+          receipt: true
+        - event: DepositMinimumEnabled()
+          handler: handleDepositMinimumEnabled
+          receipt: true
+        - event: DepositMinimumDisabled()
+          handler: handleDepositMinimumDisabled
+          receipt: true
+        - event: DepositNetValueLimitEnabled()
+          handler: handleDepositNetValueLimitEnabled
+          receipt: true
+        - event: DepositNetValueLimitDisabled()
+          handler: handleDepositNetValueLimitDisabled
+          receipt: true
+        - event: SetDepositVaultNetValueLimit(uint256)
+          handler: handleSetDepositVaultNetValueLimit
+          receipt: true
+        - event: PublicStrategySet(uint256,address[],bytes[])
+          handler: handlePublicStrategySet
+          receipt: true
+        - event: DepositStrategySet(address[],bytes[])
+          handler: handleDepositStrategySet
+          receipt: true
+        - event: PublicStrategyRemoved(uint256)
+          handler: handlePublicStrategyRemoved
+          receipt: true
+        - event: DepositStrategyRemoved()
+          handler: handleDepositStrategyRemoved
+          receipt: true
+        - event: WithdrawFeeCharge(uint256,uint256,uint256,address)
+          handler: handleWithdrawFeeCharged
+          receipt: true
+        - event: FeeCharged(uint256,uint256)
+          handler: handleFeeCharged
+          receipt: true
+        - event: DepositFeeCharge(uint256,uint256,uint256,address)
+          handler: handleDepositFeeCharged
+          receipt: true
+        - event: AssetAdded(address,address)
+          handler: handleAssetAdded
+          receipt: true
+        - event: AssetRemoved(address)
+          handler: handleAssetRemoved
+          receipt: true
+        - event: DebtAdded(address,address)
+          handler: handleDebtAdded
+          receipt: true
+        - event: DebtRemoved(address)
+          handler: handleDebtRemoved
+          receipt: true
+  - name: ERC20
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: ERC20
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings.ts
+      entities:
+        - Token
+        - TokenTransfer
+        - VaultBalance
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTokenTransfer
+          receipt: true

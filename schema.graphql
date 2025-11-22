@@ -1,0 +1,83 @@
+type Vault @entity {
+  id: ID!
+  user: Bytes
+  block: BigInt
+  name: String
+  symbol: String
+  totalSupply: BigInt
+  timestamp: BigInt
+  txid: Bytes
+  assets: [Bytes!]
+  debts: [Bytes!]
+  depositAssets: [Bytes!]
+  withdrawAssets: [Bytes!]
+  managers: [Bytes!]
+  feesReceiver: Bytes
+  depositFee: BigInt
+  withdrawFee: BigInt
+  managementFee: BigInt
+  performanceFee: BigInt
+  pricePerShare: BigInt
+  netVaultValue: BigInt
+  denominator: Bytes
+  managerAdapters: [Bytes!]
+  ownerAdapters: [Bytes!]
+  withdrawAdapters: [Bytes!]
+  depositMinimumEnabled: Boolean
+  depositMinimum: [String!]
+  depositWhitelistEnabled: Boolean
+  depositorWhitelist: [Bytes!]
+  depositNetValueLimitEnabled: Boolean
+  depositNetValueLimit: BigInt
+  riskManager: Bytes
+}
+
+type VaultDeposit @entity {
+  id: ID!
+  sender: Bytes
+  owner: Bytes
+  vault: Bytes
+  depositAsset: Bytes
+  assets: BigInt
+  shares: BigInt
+  block: BigInt
+  pricePerShare: BigInt
+  netVaultValue: BigInt
+  timestamp: BigInt
+}
+
+type VaultWithdraw @entity {
+  id: ID!
+  sender: Bytes
+  receiver: Bytes
+  vault: Bytes
+  withdrawAsset: Bytes
+  assets: BigInt
+  shares: BigInt
+  pricePerShare: BigInt
+  netVaultValue: BigInt
+  block: BigInt
+  timestamp: BigInt
+}
+
+type AquaPair @entity {
+  id: ID!
+  vault: Bytes!
+  token0: Bytes!
+  token1: Bytes!
+  feeBps: BigInt!
+  pairHash: Bytes!
+  block: BigInt!
+  timestamp: BigInt!
+  txid: Bytes!
+}
+
+type AquaStrategy @entity {
+  id: ID!
+  vault: Bytes!
+  pairHash: Bytes!
+  strategyHash: Bytes!
+  block: BigInt!
+  timestamp: BigInt!
+  txid: Bytes!
+}
