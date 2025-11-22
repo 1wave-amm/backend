@@ -3,7 +3,7 @@
   "StudioProFactory": {
     "name": "StudioProFactory",
     "address": "0xE04480f99d03ba3222979F344cF34f45405BD9E4",
-    "startBlock": 38519833
+    "startBlock": 38528273
   },
-  "version": "0.1.31"
+  "version": "0.1.33"
 }
