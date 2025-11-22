@@ -17,7 +17,8 @@
     "create:local": "graph create --node http://localhost:8020/ 1wave/backend",
     "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 1wave/backend -l v0.0.0",
     "create-and-deploy:local": "yarn build:local && yarn create:local && yarn deploy:local",
-    "create-and-deploy:base:testing": "yarn build:base:testing"
+    "create-and-deploy:base:testing": "yarn build:base:testing",
+    "deploy:goldsky": "goldsky subgraph deploy onewave/backend-0.0.2 --path ."
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.53.0",
