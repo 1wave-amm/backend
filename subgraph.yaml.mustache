@@ -23,6 +23,30 @@ dataSources:
         - event: VaultCreated(indexed address,(address,address,uint256,uint256,bool,uint256,uint256,uint256,address[],address[],address[],address[],address[],address[],address[],address[],address[]),(address,uint256,uint256,uint256,uint256))
           handler: handleVaultCreated
           receipt: true
+  - kind: ethereum/contract
+    name: WaveSwap
+    network: {{network}}
+    source:
+      address: '0xcd8acdbb5a25af79903016223d24d32f1cfd24bd'
+      abi: WaveSwap
+      startBlock: 38519833
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings.ts
+      entities:
+        - Swap
+      abis:
+        - name: WaveSwap
+          file: ./abis/WaveSwap.json
+      eventHandlers:
+        - event: SwapExactIn(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleSwapExactIn
+          receipt: true
+        - event: SwapExactOut(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleSwapExactOut
+          receipt: true
 templates:
   - name: StudioProVault
     kind: ethereum/contract

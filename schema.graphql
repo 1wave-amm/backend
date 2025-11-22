@@ -81,3 +81,16 @@ type AquaStrategy @entity {
   timestamp: BigInt!
   txid: Bytes!
 }
+
+type Swap @entity {
+  id: ID!
+  vault: Bytes!
+  tokenIn: Bytes!
+  tokenOut: Bytes!
+  amountIn: BigInt!
+  amountOut: BigInt!
+  swapType: String!
+  block: BigInt!
+  timestamp: BigInt!
+  txid: Bytes!
+}
