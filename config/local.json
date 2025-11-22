@@ -2,7 +2,7 @@
   "network": "arbitrum-one",
   "StudioProFactory": {
     "name": "StudioProFactory",
-    "address": "0x0816A88EDfd74c4d682Fab0B06cE7758Aa5E57E0",
-    "startBlock": 38518340
+    "address": "0xE04480f99d03ba3222979F344cF34f45405BD9E4",
+    "startBlock": 25032347
   }
 }
